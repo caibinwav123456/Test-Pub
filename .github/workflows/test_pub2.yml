@@ -1,0 +1,23 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Test Pub 2
+
+# Controls when the action will run. 
+on: [workflow_dispatch, fork, release]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: publish
+      uses: s0/git-publish-subdir-action@develop
+      env:
+        REPO: git@github.com:caibinwav123456/Pub.git
+        BRANCH: main
+        FOLDER: build
+        SSH_PRIVATE_KEY: ${{secrets.DEPLOY_PRIVATE_KEY}}
