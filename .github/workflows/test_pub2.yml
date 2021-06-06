@@ -9,10 +9,25 @@ on: [workflow_dispatch, fork, release]
 jobs:
   # This workflow contains a single job called "build"
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/upload-artifact@v2
+      with:
+        name: text_to_pub
+        path: build
+        retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/download-artifact@v2
+      with:
+        name: text_to_pub
+        path: build
 
     - name: publish
       uses: s0/git-publish-subdir-action@develop
